@@ -1,0 +1,72 @@
+# from Crypto.Cipher import AES
+# from Crypto.Hash import SHA256
+# password = input("Enter the password: ")
+# hash_obj = SHA256.new(password.encode('utf-8'))
+# hkey = hash_obj.digest()
+# print(hkey)
+# print(len(hkey))
+
+# def encrypt(info):
+#     msg = info
+#     BLOCK_SIZE = 16
+#     PAD = "{"
+#     padding = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PAD
+#     cipher = AES.new(hkey, AES.MODE_ECB)
+#     result = cipher.encrypt(padding(msg).encode('utf-8'))
+#     return result
+
+# def decrypt(info):
+#     msg = info
+#     PAD = "{"
+#     decipher = AES.new(hkey, AES.MODE_ECB)
+#     pt = decipher.decrypt(msg).decode('utf-8')
+#     pad_index = pt.find(PAD)
+#     result = pt[:pad_index]
+#     return result
+
+# msg = input("Enter message to be encrypted/decrypted: ")
+
+# choose = input("Type '1' for encryption and '2' for decrytion.")
+# if(choose=='1'):
+#     cipher_text = encrypt(msg)
+#     print(cipher_text)
+   
+# elif(choose=='2'):
+#     # print(cipher_text)
+#     res = msg.encode('utf-8')
+#     plaintext = decrypt(b'\xd2>v\x9f\x99*d\xc6\xa4\x91\x9d\xcc\x15Xv\x01\xad\xf7\xcb j\x81T\xbe\xb7O.\x03\xc6C\xcd1')
+#     print(plaintext)
+    
+# else:
+#     print("You entered the wrong option.")
+#     print("Thank you for using the RSA Encryptor. Goodbye!")
+
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Cipher import AES
+BLOCK_SIZE = 32 # Bytes
+
+key = 'abcdefghijklmnop'
+cipher = AES.new(key.encode('utf8'), AES.MODE_ECB)
+
+data = input("Enter your message: ")
+
+choose = input("Type '1' for encryption and '2' for decrytion.")
+
+if(choose=='1'):
+
+    res = data.encode('utf-8')
+    msg = cipher.encrypt(pad(res, BLOCK_SIZE))
+    print(msg)
+    # print(msg.hex())
+
+elif(choose=='2'):
+    res = data.encode('utf-8')
+    c = res.decode('unicode-escape').encode('ISO-8859-1')
+    decipher = AES.new(key.encode('utf8'), AES.MODE_ECB)
+    msg_dec = decipher.decrypt(c)
+    print(unpad(msg_dec, BLOCK_SIZE))
+
+else:
+    print("You entered the wrong option.")
+    print("Thank you for using the AES Encryptor. Goodbye!")
+

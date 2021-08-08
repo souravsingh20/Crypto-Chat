@@ -1,0 +1,33 @@
+import pyDes
+
+# For Python3, you'll need to use bytes, i.e.:
+#   data = b"Please encrypt my data"
+#   k = pyDes.des(b"DESCRYPT", pyDes.CBC, b"\0\0\0\0\0\0\0\0", pad=None, padmode=pyDes.PAD_PKCS5)
+
+data = input("Enter message to be encrypted/decrypted")
+# print(data)
+# res = bytes(data, 'utf-8')
+k = pyDes.des("DESCRYPT", pyDes.CBC, "\0\0\0\0\0\0\0\0", pad=None, padmode=pyDes.PAD_PKCS5)
+
+choose = input("Type '1' for encryption and '2' for decrytion.")
+if(choose=='1'):
+    d = k.encrypt(data)
+    # print(d)
+    print ("Encrypted: %r" % d)
+    
+elif(choose=='2'):
+    res = data.encode('utf-8')
+    # print(str(res))
+    c = res.decode('unicode-escape').encode('ISO-8859-1')
+    # print(c)
+    print ("Decrypted: %r" % k.decrypt(c))
+else:
+    print("You entered the wrong option.")
+    print("Thank you for using the DES Encryptor. Goodbye!")
+
+# d = k.encrypt(data)
+# print ("Encrypted: %r" % d)
+# print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
+# print ("Decrypted: %r" % k.decrypt(d))
+# print ("Decrypted: %r" % k.decrypt(b'o\xceSef\xe6\xa6\x8f\x82\x98\xc7V\xd0I\xdc\x03\x1e\x97\xe4\x99&\x07\x9cI'))
+# k.decrypt(d) == data
